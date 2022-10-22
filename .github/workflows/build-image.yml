@@ -15,20 +15,6 @@ env:
   BALENA_FLEET: info319/coderbot
   
 jobs:
-  build-image:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3 # Checking out the repo
-    - uses: balena-io/deploy-to-balena-action@master
-      id: build
-      with:
-        balena_token: ${{ secrets.BALENA_TOKEN }}
-        fleet: $BALENA_FLEET
-        registry_secrets: ${{ secrets.GHCR_CREDS }}
-        source: balena
-    - name: Log release ID built
-      run: echo "Built release ID ${{ steps.build.outputs.release_id }}"
-
   build-balena:
     runs-on: ubuntu-latest
     steps:
