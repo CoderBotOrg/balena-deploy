@@ -1,0 +1,56 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: build-image
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'balena/**'
+
+env:
+  BALENA_FLEET: info319/coderbot
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3 # Checking out the repo
+    - uses: balena-io/deploy-to-balena-action@master
+      id: build
+      with:
+        balena_token: ${{ secrets.BALENA_TOKEN }}
+        fleet: $BALENA_FLEET
+        registry_secrets: ${{ secrets.GHCR_CREDS }}
+        source: balena
+    - name: Log release ID built
+      run: echo "Built release ID ${{ steps.build.outputs.release_id }}"
+
+  build-balena:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3 # Checking out the repo
+    - run: wget https://github.com/balena-io/balena-cli/releases/download/v14.4.1/balena-cli-v14.4.1-linux-x64-standalone.zip -O balena-cli-v14.4.1-linux-x64-standalone.zip
+    - run: unzip balena-cli-v14.4.1-linux-x64-standalone.zip
+    - run: export PATH=$PATH:$(pwd)/balena-cli
+    - run: ./balena-cli/balena --version
+    - run: ./balena-cli/balena login --token ${{ secrets.BALENA_TOKEN }}
+    - run: ./balena-cli/balena os download raspberrypi3 --version v2.105.1+rev1.dev --output raspberrypi3.img
+    - run: sudo mkdir /mnt/resin-boot
+    - run: sudo mount -o loop,offset=$(( 512 * 8192)) raspberrypi3.img /mnt/resin-boot
+    - run: sudo cp balena/config.txt  /mnt/resin-boot
+    - run: sudo umount  /mnt/resin-boot
+    - run: ./balena-cli/balena config generate --version v2.105.1+rev1.dev --deviceType raspberrypi3 --fleet $BALENA_FLEET --network ethernet --appUpdatePollInterval 10 --dev -o config.json
+    - run: ./balena-cli/balena os configure raspberrypi3.img --fleet $BALENA_FLEET --config config.json --config-network ethernet
+    - run: sudo ./balena-cli/balena config write --drive raspberrypi3.img hostname coderbot
+    - run: ./balena-cli/balena preload raspberrypi3.img --fleet $BALENA_FLEET -c current
+    - run: mkdir -p dist
+    - run: mv raspberrypi3.img ./dist/.
+    - name: Archive dist
+      uses: actions/upload-artifact@v3
+      with:
+        name: image-preloaded
+        path: dist
+

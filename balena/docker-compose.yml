@@ -1,0 +1,46 @@
+version: '2'
+services:
+  frontend:
+    image: ghcr.io/coderbotorg/frontend:git-1452a77
+    restart: unless-stopped
+    network_mode: host
+    privileged: true
+
+  backend:
+    image: ghcr.io/coderbotorg/backend:git-1f72632
+    restart: unless-stopped
+    network_mode: host
+    privileged: true
+    depends_on:
+      - pigpio
+    volumes:
+      - "data:/coderbot/data"
+
+  wifi-py:
+    image: ghcr.io/coderbotorg/python-wifi-connect:0.0.11
+    restart: unless-stopped
+    network_mode: host
+    privileged: true
+    environment:
+      ## Listening IP and port ##
+      PWC_HOST: "0.0.0.0"
+      PWC_PORT: 9090
+
+      ## Hotspot details ##
+      PWC_HOTSPOT_SSID: "CoderBot_$UNIQUE_ID"
+      PWC_HOTSPOT_PASSWORD: "coderbot" # Optional. Must be 8 characters or more.
+      DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
+    labels:
+      io.balena.features.dbus: "1"
+    cap_add:
+      - NET_ADMIN
+
+  pigpio:
+    image: coderbot/alpine-pigpiod:arm32v7
+    restart: unless-stopped
+    network_mode: host
+    privileged: true
+
+volumes:
+  data:
+  logs:

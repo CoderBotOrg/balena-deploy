@@ -1,0 +1,26 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: deploy-release
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy-release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3 # Checking out the repo
+    - uses: balena-io/deploy-to-balena-action@master
+      id: build
+      with:
+        balena_token: ${{ secrets.BALENA_TOKEN }}
+        fleet: $BALENA_FLEET
+        registry_secrets: ${{ secrets.GHCR_CREDS }}
+        source: balena
+    - name: Log release ID built
+      run: echo "Built release ID ${{ steps.build.outputs.release_id }}"
+
