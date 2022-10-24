@@ -15,7 +15,7 @@ jobs:
   deploy-release:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.build.outputs.version }}
+      release_version: ${{ steps.build.outputs.version }}
     steps:
     - uses: actions/checkout@v3 # Checking out the repo
     - uses: balena-io/deploy-to-balena-action@master
@@ -46,7 +46,7 @@ jobs:
     - run: ./balena-cli/balena config generate --version v2.105.1+rev1.dev --deviceType raspberrypi3 --fleet ${{ env.BALENA_FLEET }} --network ethernet --appUpdatePollInterval 10 --dev -o config.json
     - run: ./balena-cli/balena os configure raspberrypi3.img --fleet ${{ env.BALENA_FLEET }} --config config.json --config-network ethernet
     - run: sudo ./balena-cli/balena config write --drive raspberrypi3.img hostname coderbot
-    - run: ./balena-cli/balena preload raspberrypi3.img --fleet ${{ env.BALENA_FLEET }} -c ${{ needs.deploy-release.outputs.version }}
+    - run: ./balena-cli/balena preload raspberrypi3.img --fleet ${{ env.BALENA_FLEET }} -c ${{ needs.deploy-release.outputs.release_version }}
     - run: mkdir -p dist
     - run: mv raspberrypi3.img ./dist/.
     - name: Archive dist
