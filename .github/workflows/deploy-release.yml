@@ -14,6 +14,8 @@ env:
 jobs:
   deploy-release:
     runs-on: ubuntu-latest
+    outputs:
+      release_id: ${{ steps.build.outputs.release_id }}
     steps:
     - uses: actions/checkout@v3 # Checking out the repo
     - uses: balena-io/deploy-to-balena-action@master
