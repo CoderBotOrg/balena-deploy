@@ -47,6 +47,7 @@ jobs:
     - run: ./balena-cli/balena os configure raspberrypi3.img --fleet ${{ env.BALENA_FLEET }} --config config.json --config-network ethernet
     - run: sudo ./balena-cli/balena config write --drive raspberrypi3.img hostname coderbot
     - run: export RELEASE_COMMIT=$(./balena-cli/balena release ${{ needs.deploy-release.outputs.release_id }}|grep "COMMIT"|awk '{print($2)}')
+    - run: echo $RELEASE_COMMIT
     - run: ./balena-cli/balena preload raspberrypi3.img --fleet ${{ env.BALENA_FLEET }} -c $RELEASE_COMMIT
     - run: mkdir -p dist
     - run: mv raspberrypi3.img ./dist/.
