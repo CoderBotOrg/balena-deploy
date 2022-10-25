@@ -23,7 +23,7 @@ assets:
   logo:
     type: blob.asset
     data:
-      url: 'https://github.com/CoderBotOrg/website/blob/59b9f3a4fddb641dfa46469d401670f77a14ae4f/img/coderbot_logo_big.png?raw=true'
+      url: 'https://raw.githubusercontent.com/CoderBotOrg/balena-deploy/fce68fadcb5458aaade55cee42b02e118245464c/coderbot_logo_512.png'
 data:
   applicationEnvironmentVariables:
   defaultDeviceType: raspberry-pi
