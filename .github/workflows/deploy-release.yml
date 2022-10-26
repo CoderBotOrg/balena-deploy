@@ -24,7 +24,7 @@ jobs:
         balena_token: ${{ secrets.BALENA_TOKEN }}
         fleet: ${{ env.BALENA_FLEET }}
         registry_secrets: ${{ secrets.GHCR_CREDS }}
-        source: balena
+        source: .
     - name: Log release ID built
       run: echo "Built release version ${{ steps.build.outputs.release_id }}"
 
@@ -41,7 +41,7 @@ jobs:
     - run: ./balena-cli/balena os download raspberrypi3 --version v2.105.1+rev1.dev --output raspberrypi3.img
     - run: sudo mkdir /mnt/resin-boot
     - run: sudo mount -o loop,offset=$(( 512 * 8192)) raspberrypi3.img /mnt/resin-boot
-    - run: sudo cp balena/config.txt  /mnt/resin-boot
+    - run: sudo cp rpi/config.txt  /mnt/resin-boot
     - run: sudo umount  /mnt/resin-boot
     - run: ./balena-cli/balena config generate --version v2.105.1+rev1.dev --deviceType raspberrypi3 --fleet ${{ env.BALENA_FLEET }} --network ethernet --appUpdatePollInterval 10 --dev -o config.json
     - run: ./balena-cli/balena os configure raspberrypi3.img --fleet ${{ env.BALENA_FLEET }} --config config.json --config-network ethernet
