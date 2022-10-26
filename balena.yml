@@ -1,5 +1,6 @@
 name: CoderBot
 type: sw.application
+version: "0.0.1"
 description: >-
   CoderBot is an educational robot.
 fleetcta: CoderBot is an educational robot
@@ -23,10 +24,11 @@ assets:
   logo:
     type: blob.asset
     data:
-      url: 'https://raw.githubusercontent.com/CoderBotOrg/balena-deploy/fce68fadcb5458aaade55cee42b02e118245464c/coderbot_logo_512.png'
+      url: >-
+        https://raw.githubusercontent.com/CoderBotOrg/balena-deploy/fce68fadcb5458aaade55cee42b02e118245464c/coderbot_logo_512.png
 data:
   applicationEnvironmentVariables:
   defaultDeviceType: raspberry-pi
   supportedDeviceTypes:
     - raspberrypi3
-version: "0.0.0+rev15"
+
