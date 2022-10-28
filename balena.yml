@@ -1,6 +1,6 @@
 name: CoderBot
 type: sw.application
-version: "0.0.2"
+version: "0.0.3"
 description: >-
   CoderBot is an educational robot.
 fleetcta: CoderBot is an educational robot
