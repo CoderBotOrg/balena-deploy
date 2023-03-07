@@ -39,7 +39,7 @@ services:
       - NET_ADMIN
 
   pigpio:
-    image: coderbot/alpine-pigpiod:arm32v7
+    image: coderbot/alpine-pigpiod:pigpio-v79
     restart: unless-stopped
     network_mode: host
     privileged: true
