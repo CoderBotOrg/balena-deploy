@@ -18,7 +18,7 @@ jobs:
       release_id: ${{ steps.build.outputs.release_id }}
     steps:
     - uses: actions/checkout@v3 # Checking out the repo
-    - uses: balena-io/deploy-to-balena-action@v0.22.4
+    - uses: balena-io/deploy-to-balena-action@v2.0.29
       id: build
       with:
         balena_token: ${{ secrets.BALENA_TOKEN }}
