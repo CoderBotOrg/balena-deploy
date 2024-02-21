@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3 # Checking out the repo
-    - run: wget https://github.com/balena-io/balena-cli/releases/download/v14.4.1/balena-cli-v14.4.1-linux-x64-standalone.zip -O balena-cli-v14.4.1-linux-x64-standalone.zip
+    - run: wget https://github.com/balena-io/balena-cli/releases/download/v18.0.0/balena-cli-v18.0.0-linux-x64-standalone.zip -O balena-cli-v14.4.1-linux-x64-standalone.zip
     - run: unzip balena-cli-v14.4.1-linux-x64-standalone.zip
     - run: export PATH=$PATH:$(pwd)/balena-cli
     - run: ./balena-cli/balena --version
