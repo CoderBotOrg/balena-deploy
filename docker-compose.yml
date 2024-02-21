@@ -21,6 +21,7 @@ services:
 
   wifi-py:
     image: ghcr.io/coderbotorg/python-wifi-connect:0.0.13
+    platform: linux/arm/v7
     restart: unless-stopped
     network_mode: host
     privileged: true
