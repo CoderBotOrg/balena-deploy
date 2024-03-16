@@ -1191,5 +1191,4 @@ dtparam=spi=on
 disable_splash=1
 avoid_warnings=1
 dtparam=audio=on
-dtoverlay=pi3-disable-bt
 arm_freq=1000
