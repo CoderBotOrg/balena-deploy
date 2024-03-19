@@ -1,6 +1,6 @@
 name: CoderBot
 type: sw.application
-version: "0.0.8"
+version: "0.0.7"
 description: >-
   CoderBot is an educational robot.
 fleetcta: CoderBot is an educational robot
@@ -13,7 +13,7 @@ post-provisioning: >-
 
   **Usage**
 
-  Once connected to the "CoderBot_<unique_device_id>, start a browser and open http://coderbot.local/
+  Once connected to the "CoderBot_<unique_device_id> wifi network, start a browser and open http://coderbot.local/
   
   For detailed instructions on how to use balenaSound check out [this](https://docs.coderbot.org/manual/) guide.
 assets:
