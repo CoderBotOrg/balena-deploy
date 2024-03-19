@@ -8,8 +8,6 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-env:
-  BALENA_FLEET: info319/coderbot
 
 jobs:
   deploy-release:
@@ -18,7 +16,7 @@ jobs:
       release_id: ${{ steps.build.outputs.release_id }}
     steps:
     - uses: actions/checkout@v3 # Checking out the repo
-    - uses: balena-io/deploy-to-balena-action@v2.0.29
+    - uses: balena-io/deploy-to-balena-action@v2.0.45
       id: build
       with:
         balena_token: ${{ secrets.BALENA_TOKEN }}
