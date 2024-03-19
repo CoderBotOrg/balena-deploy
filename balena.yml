@@ -2,7 +2,7 @@ name: CoderBot
 type: sw.application
 version: "0.0.7"
 description: >-
-  CoderBot is an educational robot.
+  CoderBot is an educational robot developed by Università di Milano - Bicocca.
 fleetcta: CoderBot is an educational robot
 post-provisioning: >-
   ## Usage instructions
