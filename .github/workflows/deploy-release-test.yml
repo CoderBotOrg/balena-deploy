@@ -29,6 +29,8 @@ jobs:
     strategy:
       matrix:
         devide_type: [raspberrypi3, raspberrypi3-64, raspberrypi0-2w-64]
+    env:
+      IMAGE_NAME: coderbot_${{ matrix.devide_type }}_$(date +"%Y_%m_%d").img
     needs: deploy-release
     runs-on: ubuntu-latest
     environment: test
@@ -39,7 +41,6 @@ jobs:
     - run: export PATH=$PATH:$(pwd)/balena-cli
     - run: ./balena-cli/balena --version
     - run: ./balena-cli/balena login --token ${{ secrets.BALENA_TOKEN }}
-    - run: export IMAGE_NAME=coderbot_${{ matrix.devide_type }}_$(date +"%Y_%m_%d").img
     - run: ./balena-cli/balena os download ${{ matrix.devide_type }} --version v5.1.20+rev1.dev --output $IMAGE_NAME
     - run: sudo mkdir /mnt/resin-boot
     - run: sudo mount -o loop,offset=$(( 512 * 8192)) $IMAGE_NAME /mnt/resin-boot
