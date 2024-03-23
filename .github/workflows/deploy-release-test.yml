@@ -28,7 +28,7 @@ jobs:
   build-balena:
     strategy:
       matrix:
-        device_type: [raspberrypi3, raspberrypi3-64, raspberrypi0-2w-64]
+        device_type: [raspberrypi3, raspberrypi0-2w-64]
     env:
       IMAGE_NAME: coderbot_${{ matrix.device_type }}.img
       DEVICE_TYPE: ${{ matrix.device_type }}
