@@ -29,11 +29,15 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        device_type: [raspberrypi3, raspberrypi0-2w-64]
+        device:
+        - type: raspberrypi3
+          fleet: info319/coderbot_test
+        - type: raspberrypi0-2w-64
+          fleet: info319/coderbot_pi0w2_64_test
     env:
-      IMAGE_NAME: coderbot_${{ matrix.device_type }}.img
-      DEVICE_TYPE: ${{ matrix.device_type }}
-      BALENA_FLEET: ${{ vars.BALENA_FLEET }}
+      IMAGE_NAME: coderbot_${{ matrix.device.type }}.img
+      DEVICE_TYPE: ${{ matrix.device.type }}
+      BALENA_FLEET: ${{ matrix.device.fleet }}
     needs: deploy-release
     runs-on: ubuntu-latest
     environment: test
