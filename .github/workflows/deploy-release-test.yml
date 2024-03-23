@@ -9,6 +9,21 @@ on:
 
 jobs:
   deploy-release:
+    strategy:
+      max-parallel: 3
+      matrix:
+        device:
+        - type: raspberrypi3
+          fleet: info319/coderbot_test
+        - type: raspberrypi3-64
+          fleet: info319/coderbot_pi3_64_test
+        - type: raspberrypi0-2w-64
+          fleet: info319/coderbot_pi0w2_64_test
+    env:
+      IMAGE_NAME: coderbot_${{ matrix.device.type }}.img
+      DEVICE_TYPE: ${{ matrix.device.type }}
+      BALENA_FLEET: ${{ matrix.device.fleet }}
+
     runs-on: ubuntu-latest
     environment: test
     outputs:
@@ -19,7 +34,7 @@ jobs:
       id: build
       with:
         balena_token: ${{ secrets.BALENA_TOKEN }}
-        fleet: ${{ vars.BALENA_FLEET }}
+        fleet: $BALENA_FLEET
         registry_secrets: ${{ secrets.GHCR_CREDS }}
         source: .
     - name: Log release ID built
@@ -32,6 +47,8 @@ jobs:
         device:
         - type: raspberrypi3
           fleet: info319/coderbot_test
+        - type: raspberrypi3-64
+          fleet: info319/coderbot_pi3_64_test
         - type: raspberrypi0-2w-64
           fleet: info319/coderbot_pi0w2_64_test
     env:
