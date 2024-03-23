@@ -27,6 +27,7 @@ jobs:
 
   build-balena:
     strategy:
+      max-parallel: 1
       matrix:
         device_type: [raspberrypi3, raspberrypi0-2w-64]
     env:
