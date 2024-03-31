@@ -39,8 +39,10 @@ jobs:
       matrix:
         device:
         - type: raspberrypi3-64
+          version: v5.0.8.dev
           fleet: info319/coderbot_pi3_64_test
         - type: raspberrypi0-2w-64
+          version: v5.1.47.dev
           fleet: info319/coderbot_pi0w2_64_test
     env:
       IMAGE_NAME: coderbot_${{ matrix.device.type }}.img
@@ -56,12 +58,12 @@ jobs:
     - run: export PATH=$PATH:$(pwd)/balena-cli
     - run: ./balena-cli/balena --version
     - run: ./balena-cli/balena login --token ${{ secrets.BALENA_TOKEN }}
-    - run: ./balena-cli/balena os download $DEVICE_TYPE --version v5.1.20+rev1.dev --output $IMAGE_NAME
+    - run: ./balena-cli/balena os download $DEVICE_TYPE --version $DEVICE_VERSION --output $IMAGE_NAME
     - run: sudo mkdir /mnt/resin-boot
     - run: sudo mount -o loop,offset=$(( 512 * 8192)) $IMAGE_NAME /mnt/resin-boot
     - run: sudo cp rpi/config.txt  /mnt/resin-boot
     - run: sudo umount  /mnt/resin-boot
-    - run: ./balena-cli/balena config generate --version 5.1.20+rev1.dev --deviceType $DEVICE_TYPE --fleet $BALENA_FLEET --network ethernet --appUpdatePollInterval 10 --dev -o config.json
+    - run: ./balena-cli/balena config generate --version $DEVICE_VERSION --deviceType $DEVICE_TYPE --fleet $BALENA_FLEET --network ethernet --appUpdatePollInterval 10 --dev -o config.json
     - run: ./balena-cli/balena os configure $IMAGE_NAME --fleet $BALENA_FLEET --config config.json --config-network ethernet
     - run: sudo ./balena-cli/balena config write --drive $IMAGE_NAME hostname coderbot
     - run: echo "RELEASE_COMMIT=current" >> $GITHUB_ENV #echo "RELEASE_COMMIT=$(./balena-cli/balena release ${{ needs.deploy-release.outputs.release_id }}|grep 'COMMIT'|awk '{print $2}')" >> $GITHUB_ENV
