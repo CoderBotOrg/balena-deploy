@@ -47,6 +47,7 @@ jobs:
     env:
       IMAGE_NAME: coderbot_${{ matrix.device.type }}.img
       DEVICE_TYPE: ${{ matrix.device.type }}
+      DEVICE_VERSION: ${{ matrix.device.version }}
       BALENA_FLEET: ${{ matrix.device.fleet }}
     needs: deploy-release
     runs-on: ubuntu-latest
