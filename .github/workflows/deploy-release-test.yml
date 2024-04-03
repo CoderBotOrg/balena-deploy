@@ -35,7 +35,6 @@ jobs:
 
   build-balena:
     strategy:
-      max-parallel: 1
       matrix:
         device:
         - type: raspberrypi3-64
