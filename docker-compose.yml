@@ -7,7 +7,7 @@ services:
     privileged: true
 
   backend:
-    image: ghcr.io/coderbotorg/backend:git-faa8d75-arm64
+    image: ghcr.io/coderbotorg/backend:git-c57eca5-arm64
     restart: unless-stopped
     network_mode: host
     privileged: true
