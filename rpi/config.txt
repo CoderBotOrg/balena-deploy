@@ -466,7 +466,7 @@
 ##
 ##     Default 0
 ##
-start_x=1
+start_x=0
 
 ## disable_camera_led
 ##     Turn off the red camera led when recording video or taking a still
