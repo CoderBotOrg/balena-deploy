@@ -15,7 +15,6 @@ services:
       - pigpio
     volumes:
       - "data:/coderbot/data"
-      - "/dev/:/dev/"
     environment:
       UDEV: 1
     labels:
