@@ -13,6 +13,8 @@ jobs:
       max-parallel: 3
       matrix:
         device:
+        - type: raspberrypi3
+          fleet: info319/coderbot_test
         - type: raspberrypi3-64
           fleet: info319/coderbot_pi3_64_test
         - type: raspberrypi0-2w-64
@@ -37,6 +39,9 @@ jobs:
     strategy:
       matrix:
         device:
+        - type: raspberrypi3
+          version: 5.1.8
+          fleet: info319/coderbot_test
         - type: raspberrypi3-64
           version: v5.0.8.dev
           fleet: info319/coderbot_pi3_64_test
