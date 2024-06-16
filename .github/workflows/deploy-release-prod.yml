@@ -9,6 +9,12 @@ on:
 
 jobs:
   deploy-release:
+    strategy:
+      max-parallel: 3
+      matrix:
+        device:
+        - type: raspberrypi3
+          fleet: info319/coderbot
     runs-on: ubuntu-latest
     environment: prod
     outputs:
@@ -19,13 +25,24 @@ jobs:
       id: build
       with:
         balena_token: ${{ secrets.BALENA_TOKEN }}
-        fleet: ${{ vars.BALENA_FLEET }}
+        fleet: ${{ matrix.device.fleet }}
         registry_secrets: ${{ secrets.GHCR_CREDS }}
         source: .
     - name: Log release ID built
       run: echo "Built release version ${{ steps.build.outputs.release_id }}"
 
   build-balena:
+    strategy:
+      matrix:
+        device:
+        - type: raspberrypi3
+          version: v5.3.7.dev
+          fleet: info319/coderbot
+    env:
+      IMAGE_NAME: coderbot_${{ matrix.device.type }}.img
+      DEVICE_TYPE: ${{ matrix.device.type }}
+      DEVICE_VERSION: ${{ matrix.device.version }}
+      BALENA_FLEET: ${{ matrix.device.fleet }}
     needs: deploy-release
     runs-on: ubuntu-latest
     environment: prod
@@ -36,20 +53,21 @@ jobs:
     - run: export PATH=$PATH:$(pwd)/balena-cli
     - run: ./balena-cli/balena --version
     - run: ./balena-cli/balena login --token ${{ secrets.BALENA_TOKEN }}
-    - run: ./balena-cli/balena os download raspberrypi3 --version v5.1.20+rev1.dev --output raspberrypi3.img
+    - run: ./balena-cli/balena os download $DEVICE_TYPE --version $DEVICE_VERSION --output $IMAGE_NAME
     - run: sudo mkdir /mnt/resin-boot
-    - run: sudo mount -o loop,offset=$(( 512 * 8192)) raspberrypi3.img /mnt/resin-boot
+    - run: sudo mount -o loop,offset=$(( 512 * 8192)) $IMAGE_NAME /mnt/resin-boot
     - run: sudo cp rpi/config.txt  /mnt/resin-boot
     - run: sudo umount  /mnt/resin-boot
-    - run: ./balena-cli/balena config generate --version 5.1.20+rev1.dev --deviceType raspberrypi3 --fleet ${{ vars.BALENA_FLEET }} --network ethernet --appUpdatePollInterval 10 --dev -o config.json
-    - run: ./balena-cli/balena os configure raspberrypi3.img --fleet ${{ vars.BALENA_FLEET }} --config config.json --config-network ethernet
-    - run: sudo ./balena-cli/balena config write --drive raspberrypi3.img hostname coderbot
+    - run: ./balena-cli/balena config generate --version $DEVICE_VERSION --deviceType $DEVICE_TYPE --fleet $BALENA_FLEET --network ethernet --appUpdatePollInterval 10 --dev -o config.json
+    - run: ./balena-cli/balena os configure $IMAGE_NAME --fleet $BALENA_FLEET --config config.json --config-network ethernet
+    - run: sudo ./balena-cli/balena config write --drive $IMAGE_NAME hostname coderbot
     - run: echo "RELEASE_COMMIT=current" >> $GITHUB_ENV #echo "RELEASE_COMMIT=$(./balena-cli/balena release ${{ needs.deploy-release.outputs.release_id }}|grep 'COMMIT'|awk '{print $2}')" >> $GITHUB_ENV
-    - run: ./balena-cli/balena preload raspberrypi3.img --fleet ${{ vars.BALENA_FLEET }} -c $RELEASE_COMMIT
+    - run: ./balena-cli/balena preload $IMAGE_NAME --fleet $BALENA_FLEET -c $RELEASE_COMMIT
     - run: mkdir -p dist
-    - run: mv raspberrypi3.img ./dist/.
+    - run: mv $IMAGE_NAME ./dist/.
     - name: Archive dist
       uses: actions/upload-artifact@v3
       with:
         name: image-preloaded
         path: dist
+  
