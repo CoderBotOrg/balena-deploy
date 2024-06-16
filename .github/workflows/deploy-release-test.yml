@@ -40,7 +40,7 @@ jobs:
       matrix:
         device:
         - type: raspberrypi3
-          version: 5.1.8
+          version: v5.3.7.dev
           fleet: info319/coderbot_test
         - type: raspberrypi3-64
           version: v5.0.8.dev
