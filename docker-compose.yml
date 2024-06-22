@@ -22,7 +22,7 @@ services:
       io.balena.features.kernel-modules: '1'
 
   wifi-py:
-    image: ghcr.io/coderbotorg/python-wifi-connect:0.0.14
+    image: ghcr.io/coderbotorg/python-wifi-connect:0.0.15
     platform: linux/arm/v7
     restart: unless-stopped
     network_mode: host
