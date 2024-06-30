@@ -1191,6 +1191,7 @@ dtparam=spi=on
 disable_splash=1
 avoid_warnings=1
 dtparam=audio=on
-arm_freq=1000
-dtoverlay=vc4-kms-v3d
-dtoverlay=ov5647
+#arm_freq=1000
+#dtoverlay=vc4-kms-v3d
+#dtoverlay=ov5647
+camera_auto_detect=1
