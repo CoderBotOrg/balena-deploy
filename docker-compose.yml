@@ -1,13 +1,15 @@
 version: '2'
 services:
   frontend:
-    image: ghcr.io/coderbotorg/frontend:v0.6.0
+    image: ghcr.io/coderbotorg/frontend:git-eb9723e
+    platform: linux/arm64
     restart: unless-stopped
     network_mode: host
     privileged: true
 
   backend:
-    image: ghcr.io/coderbotorg/backend:5.1.1
+    image: ghcr.io/coderbotorg/backend:git-47b35ef-arm64
+    platform: linux/arm64
     restart: unless-stopped
     network_mode: host
     privileged: true
@@ -23,7 +25,7 @@ services:
 
   wifi-py:
     image: ghcr.io/coderbotorg/python-wifi-connect:0.0.16
-    platform: linux/arm/v7
+    platform: linux/arm64
     restart: unless-stopped
     network_mode: host
     privileged: true
@@ -43,6 +45,7 @@ services:
 
   pigpio:
     image: coderbot/alpine-pigpiod:pigpio-v79
+    platform: linux/arm64
     restart: unless-stopped
     network_mode: host
     privileged: true
