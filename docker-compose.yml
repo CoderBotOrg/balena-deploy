@@ -1,7 +1,7 @@
 version: '2'
 services:
   frontend:
-    image: ghcr.io/coderbotorg/frontend:git-eb9723e
+    image: ghcr.io/coderbotorg/frontend:latest-arm64
     platform: linux/arm64
     restart: unless-stopped
     network_mode: host
