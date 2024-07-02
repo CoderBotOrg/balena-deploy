@@ -17,9 +17,8 @@ services:
       - pigpio
     volumes:
       - "data:/coderbot/data"
-      - /run/udev:/run/udev:ro
     environment:
-      UDEV: 1
+      UDEV: "on"
     labels:
       io.balena.features.supervisor-api: "1"
       io.balena.features.kernel-modules: '1'
