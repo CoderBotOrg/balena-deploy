@@ -8,7 +8,7 @@ services:
     privileged: true
 
   backend:
-    image: ghcr.io/coderbotorg/backend:feat-bullseye_64_20240304-arm64
+    image: ghcr.io/coderbotorg/backend:git-7ff085d-arm64
     platform: linux/arm64
     restart: unless-stopped
     network_mode: host
@@ -17,8 +17,6 @@ services:
       - pigpio
     volumes:
       - "data:/coderbot/data"
-    environment:
-      UDEV: "on"
     labels:
       io.balena.features.supervisor-api: "1"
       io.balena.features.kernel-modules: '1'
