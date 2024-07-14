@@ -1,14 +1,14 @@
 version: '2'
 services:
   frontend:
-    image: ghcr.io/coderbotorg/frontend:latest-arm64
+    image: ghcr.io/coderbotorg/frontend:v0.6.0
     platform: linux/arm64
     restart: unless-stopped
     network_mode: host
     privileged: true
 
   backend:
-    image: ghcr.io/coderbotorg/backend:git-c2ccffa-arm64
+    image: ghcr.io/coderbotorg/backend:5.1.1
     platform: linux/arm64
     restart: unless-stopped
     network_mode: host
