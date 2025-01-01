@@ -1,7 +1,7 @@
 version: '2'
 services:
   frontend:
-    image: ghcr.io/coderbotorg/frontend:v0.7-rc1
+    image: ghcr.io/coderbotorg/frontend:v0.7
     restart: unless-stopped
     network_mode: host
     privileged: true
