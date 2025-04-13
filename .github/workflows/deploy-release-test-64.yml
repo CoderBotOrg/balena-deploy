@@ -76,7 +76,7 @@ jobs:
     - run: mkdir -p dist
     - run: mv $IMAGE_NAME ./dist/.
     - name: Archive dist
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: image-preloaded
-        path: dist
+        name: ${{ matrix.device.type }}-${{ matrix.device.version }}-${{ github.run_number }}
+        path: dist/*
