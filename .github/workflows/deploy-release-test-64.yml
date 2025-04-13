@@ -58,8 +58,8 @@ jobs:
     environment: test
     steps:
     - uses: actions/checkout@v3 # Checking out the repo
-    - run: wget https://github.com/balena-io/balena-cli/releases/download/v18.0.0/balena-cli-v18.0.0-linux-x64-standalone.zip -O balena-cli-v14.4.1-linux-x64-standalone.zip
-    - run: unzip balena-cli-v14.4.1-linux-x64-standalone.zip
+    - run: wget https://github.com/balena-io/balena-cli/releases/download/v21.1.9/balena-cli-v21.1.9-linux-x64-standalone.zip -O balena-cli-v21.1.9-linux-x64-standalone.zip
+    - run: unzip balena-cli-v21.1.9-linux-x64-standalone.zip
     - run: export PATH=$PATH:$(pwd)/balena-cli
     - run: ./balena-cli/balena --version
     - run: ./balena-cli/balena login --token ${{ secrets.BALENA_TOKEN }}
@@ -75,8 +75,8 @@ jobs:
     - run: ./balena-cli/balena preload $IMAGE_NAME --fleet $BALENA_FLEET -c $RELEASE_COMMIT
     - run: mkdir -p dist
     - run: mv $IMAGE_NAME ./dist/.
-    - name: Archive dist
-      uses: actions/upload-artifact@v3
-      with:
-        name: image-preloaded
-        path: dist
+    # - name: Archive dist
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #    name: image-preloaded
+    #    path: dist
