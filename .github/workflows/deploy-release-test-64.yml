@@ -75,8 +75,8 @@ jobs:
     - run: ./balena-cli/balena preload $IMAGE_NAME --fleet $BALENA_FLEET -c $RELEASE_COMMIT
     - run: mkdir -p dist
     - run: mv $IMAGE_NAME ./dist/.
-    # - name: Archive dist
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #    name: image-preloaded
-    #    path: dist
+    - name: Archive dist
+      uses: actions/upload-artifact@v3
+      with:
+        name: image-preloaded
+        path: dist
