@@ -466,7 +466,7 @@
 ##
 ##     Default 0
 ##
-start_x=0
+start_x=1
 
 ## disable_camera_led
 ##     Turn off the red camera led when recording video or taking a still
@@ -1191,5 +1191,4 @@ dtparam=spi=on
 disable_splash=1
 avoid_warnings=1
 dtparam=audio=on
-#arm_freq=1000
-camera_auto_detect=1
+arm_freq=1000
