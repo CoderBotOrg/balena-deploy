@@ -5,7 +5,7 @@ name: deploy-release
 
 on:
   push:
-    branches: [ main_64 ]
+    branches: [ main64 ]
 
 jobs:
   deploy-release:
@@ -13,12 +13,12 @@ jobs:
       max-parallel: 3
       matrix:
         device:
-        - type: raspberrypi3
-          fleet: info319/coderbot_test
-        # - type: raspberrypi3-64
-        #   fleet: info319/coderbot_pi3_64_test
-        # - type: raspberrypi0-2w-64
-        #   fleet: info319/coderbot_pi0w2_64_test
+        # - type: raspberrypi3
+        #   fleet: info319/coderbot_test
+        - type: raspberrypi3-64
+          fleet: info319/coderbot_pi3_64_test
+        - type: raspberrypi0-2w-64
+          fleet: info319/coderbot_pi0w2_64_test
     runs-on: ubuntu-latest
     environment: test
     outputs:
@@ -39,15 +39,15 @@ jobs:
     strategy:
       matrix:
         device:
-        - type: raspberrypi3
-          version: v5.3.21.dev
-          fleet: info319/coderbot_test
-        # - type: raspberrypi3-64
-        #   version: 6.5.9+rev5.dev
-        #   fleet: info319/coderbot_pi3_64_test
-        # - type: raspberrypi0-2w-64
-        #   version: 6.5.9+rev5.dev
-        #   fleet: info319/coderbot_pi0w2_64_test
+        # - type: raspberrypi3
+        #   version: v5.3.21.dev
+        #   fleet: info319/coderbot_test
+        - type: raspberrypi3-64
+          version: 6.5.9+rev5.dev
+          fleet: info319/coderbot_pi3_64_test
+        - type: raspberrypi0-2w-64
+          version: 6.5.9+rev5.dev
+          fleet: info319/coderbot_pi0w2_64_test
     env:
       IMAGE_NAME: coderbot_${{ matrix.device.type }}.img
       DEVICE_TYPE: ${{ matrix.device.type }}
