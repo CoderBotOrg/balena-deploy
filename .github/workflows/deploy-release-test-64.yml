@@ -19,6 +19,9 @@ jobs:
           fleet: info319/coderbot_pi3_64_test
         - type: raspberrypi0-2w-64
           fleet: info319/coderbot_pi0w2_64_test
+        - type: raspberrypi5
+          version: 6.5.9+rev5.dev
+          fleet: info319/coderbot_pi5_64_test
     runs-on: ubuntu-latest
     environment: test
     outputs:
