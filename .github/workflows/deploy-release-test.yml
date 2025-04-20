@@ -47,11 +47,11 @@ jobs:
       matrix:
         device:
         - type: raspberrypi3
-          version: v6.5.17+rev2.dev
+          version: 6.1.24+rev2.dev
           fleet: info319/coderbot_test
           config: config_32
         - type: raspberrypi3-64
-          version: v6.5.1+rev4.dev
+          version: 6.5.1+rev4.dev
           fleet: info319/coderbot_pi3_64_test
           config: config_64
         - type: raspberrypi0-2w-64

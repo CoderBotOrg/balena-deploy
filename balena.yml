@@ -33,4 +33,5 @@ data:
     - raspberrypi3
     - raspberrypi3-64
     - raspberrypi0-2w-64
+    - raspberrypi5
 
